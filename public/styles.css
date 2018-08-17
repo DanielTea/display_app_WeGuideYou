@@ -1,0 +1,140 @@
+
+body {
+  padding: 0;
+  margin : 0;
+  overflow: hidden;
+}
+
+@keyframes background-movement {
+    0% {
+      background-position: 1000% 1000%;
+    }
+
+    33% {
+      background-position: 1000% 0%;
+    }
+
+    66% {
+      background-position: 0% 1000%;
+    }
+
+    100% {
+      background-position: 1000% 1000%;
+    }
+}
+
+.wrapper, .animated-bg {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  transition: background-color 1s ease;
+  z-index: 2;
+}
+
+
+.blue-bg {
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: #002965;
+}
+
+.start-bg-animation {
+  /* background-color: rgba(122, 167, 207, 0); */
+}
+
+
+
+#my-loading {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  height: 35px;
+  width: 400px;
+  z-index: 5;
+}
+
+@keyframes outer-square-rot {
+  0% {
+    transform: rotate(45deg);
+  }
+
+  50% {
+    transform: rotate(225deg);
+  }
+
+  100% {
+    transform: rotate(225deg);
+  }
+}
+
+.outer-square {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 10px 2px;
+  transform: rotate(45deg);
+  position: absolute;
+  transition: border-color 0.3s ease;
+}
+
+.inner-square {
+  width: 15px;
+  height: 15px;
+  background-color: rgba(255,255,255,0.5);
+  position: absolute;
+  transform: rotate(45deg);
+  border-radius: 4px 1px;
+  top: 9px;
+  left: 9px;
+  transition: background-color 0.3s ease;
+}
+
+.rotate {
+  animation: outer-square-rot 1s ease-in infinite !important;
+}
+
+.whiter {
+  background-color: rgba(255,255,255,0.9);
+}
+
+#text {
+    font-family: Titillium, sans-serif;
+    font-weight: 500;
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    color: rgba(255,255,255,0.8);
+    transition: color 0.5s ease
+  }
+.outer {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+}
+.inner {
+  padding: 100px 300px;
+}
+
+.inner > h1, .inner > h2 {
+  font-size: 60px;
+  font-family: Titillium, sans;
+  font-weight: 500;
+  color: rgba(255,255,255,0);
+  text-align: center;
+  transition: color 0.5s ease
+}
+
+.invisible {
+  background-color: rgba(255,255,255,0) !important;
+  border-color: rgba(255,255,255,0) !important;
+  color: rgba(255,255,255,0) !important;
+}
+
+.make-visible {
+    color: rgba(255,255,255,0.8) !important;
+
+}
