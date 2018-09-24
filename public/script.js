@@ -194,12 +194,12 @@ function deleteGreeting() {
 
 ipcRenderer.on("position", (event, arg) => {
   if (greetingInProcess) {
-    let correctedPosition = correctPosition(arg.x0, arg.y0, arg.x1, arg.y1)
+    let correctedPosition = correctPosition(arg.position.x0, arg.position.y0, arg.position.x1, arg.position.y1, arg.framesize)
     stepper.updateStepper(correctedPosition.x, correctedPosition.y)
   }
 })
 
-function correctPosition(x0, y0, x1, y1) {
+function correctPosition(x0, y0, x1, y1, framesize) {
 
   // The resolution of the video camera is currently 320 * 240 px.
   // So we first take the middle of the bounding box of the face 
@@ -210,8 +210,8 @@ function correctPosition(x0, y0, x1, y1) {
   
   let particleCanvas = getEl("#particles-js > canvas")[0]
 
-  let scaled_pos_x = particleCanvas.getAttribute("width") - middle_x / 320 * particleCanvas.getAttribute("width")
-  let scaled_pos_y = middle_y / 240 * particleCanvas.getAttribute("height")
+  let scaled_pos_x = particleCanvas.getAttribute("width") - middle_x / framesize.width * particleCanvas.getAttribute("width")
+  let scaled_pos_y = middle_y / framesize.height * particleCanvas.getAttribute("height")
 
   console.log(middle_x, scaled_pos_x)
   console.log(middle_y, scaled_pos_y)

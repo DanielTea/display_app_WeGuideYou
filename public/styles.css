@@ -102,14 +102,21 @@ body {
 }
 
 #text {
-    font-family: Titillium, sans-serif;
-    font-weight: 500;
+    font-family: 'Titillium Web', Titillium, Ubuntu, sans;
+    font-weight: 300;
     position: absolute;
     top: 10px;
     left: 60px;
     color: rgba(255,255,255,0.8);
-    transition: color 0.5s ease
+    transition: color 0.5s ease;
+    min-width: 700px !important;
+
   }
+
+.inner > h2 {
+  min-width: 700px !important;
+}
+
 .outer {
   position: absolute;
   z-index: 5;
@@ -121,8 +128,8 @@ body {
 
 .inner > h1, .inner > h2 {
   font-size: 60px;
-  font-family: Titillium, sans;
-  font-weight: 500;
+  font-family: 'Titillium Web', Titillium, Ubuntu, sans;
+  font-weight: 300;
   color: rgba(255,255,255,0);
   text-align: center;
   transition: color 0.5s ease
@@ -138,3 +145,4 @@ body {
     color: rgba(255,255,255,0.8) !important;
 
 }
+

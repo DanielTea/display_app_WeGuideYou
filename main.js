@@ -7,19 +7,11 @@ const windowName = "main"
 const USE_IPC_WITH_PYTHON = false
 let myPort, myAddress
 
-try {
-  // throw new Error("Dude delete this line if you are working at home")
-  const connectionConfig = JSON.parse(fs.readFileSync('config/connection.json', 'utf8'));
-  myPort = connectionConfig.port
-  myAddress = connectionConfig.address
-  console.log("Connection to:", myAddress, myPort)  
-} catch (error) {
-  console.log(error)
-  console.log("Falling back to standart address...") 
-  myPort = 1337
-  myAddress = "127.0.0.1"
-  console.log("Connection to:", myAddress, myPort) 
-}
+
+const connectionConfig = JSON.parse(fs.readFileSync('config/connection.json', 'utf8'));
+myPort = connectionConfig.port
+myAddress = connectionConfig.address
+console.log("Connection to:", myAddress, myPort)  
 
 
 let debug = false;
@@ -94,40 +86,39 @@ app.on('activate', () => {
   }
 })
 
-let io = require('socket.io-client')
+let io = require('socket.io')
 
-const address =  "http://" + myAddress + ":" + myPort
-console.log("connecting to: ", address)
-let connection =  io.connect(address)
+console.log("connecting to: ", myPort)
+let connection =  io.listen(myPort)
 
-connection.on('connect', function (socket) {
-  console.log("display received connection")
+connection.sockets.on('connection', function (socket) { 
+  console.log("connection to internal handler")
 
-  connection.on("msg", msg => {
-      console.log("got message", msg)
-    })
+  socket.emit("msg", "Hello from Display")
 
-  connection.on("newSession", (msg) => {
+  socket.on('msg', msg => {
+    console.log("got message", msg)
+  })
+  
+  socket.on("newSession", (msg) => {
     console.log("newSession", msg)
     win.webContents.send('new-session' , msg);
   })
-
-
-  connection.on("stopSession", (msg) => {
+  
+  
+  socket.on("stopSession", (msg) => {
     console.log("stopSession", msg)
     win.webContents.send('stop-session' , {"face_id": msg});
   })
-
-
-  connection.on("updatePosition", (msg) => {
+  
+  
+  socket.on("updatePosition", (msg) => {
     console.log("updatePosition", msg)
-    win.webContents.send('position' , msg.position);
+    win.webContents.send('position' , {"position": msg.position, "framesize": msg.framesize});
   })
 })
 
-
-// teste die verbindung zum browser window
 ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg) // prints "ping"
+  console.log(arg) 
   event.sender.send('asynchronous-reply', 'hello from electron')
 })
