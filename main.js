@@ -10,14 +10,13 @@ let myPort, myAddress
 
 const connectionConfig = JSON.parse(fs.readFileSync('config/connection.json', 'utf8'));
 myPort = connectionConfig.port
-myAddress = connectionConfig.address
-console.log("Connection to:", myAddress, myPort)  
+console.log("Listening on:", myPort)  
 
 
 let debug = false;
 let fullscreen = false;
-let browserAlive = false;
-let isConnected = false;
+// let browserAlive = false;
+// let isConnected = false;
 
 // taking care of commandline args
 var arguments = process.argv.slice(2);
@@ -48,7 +47,7 @@ arguments.forEach(function(value,index, array) {
 let win
 
 function createWindow () {
-  win = new BrowserWindow({width: 1280, height: 720, title: "WeGuideYou"})
+  win = new BrowserWindow({width: 1920, height: 1080, title: "WeGuideYou"})
 
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
