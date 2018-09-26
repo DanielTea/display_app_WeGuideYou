@@ -3,6 +3,7 @@ body {
   padding: 0;
   margin : 0;
   overflow: hidden;
+  cursor: none;
 }
 
 @keyframes background-movement {
@@ -114,13 +115,13 @@ body {
   }
 
 .inner > h2 {
-  min-width: 700px !important;
-}
+  font-weight: 200 !important;}
 
 .outer {
   position: absolute;
   z-index: 5;
   top: 0;
+  width: 100%;
 }
 .inner {
   padding: 100px 300px;
@@ -132,7 +133,9 @@ body {
   font-weight: 300;
   color: rgba(255,255,255,0);
   text-align: center;
-  transition: color 0.5s ease
+  transition: color 0.5s ease;
+  width: 60%;
+  margin: auto;  
 }
 
 .invisible {
