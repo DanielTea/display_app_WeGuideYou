@@ -8,10 +8,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^1.8.7"
+    "electron": "^3.0.13"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "snapsvg": "^0.5.1",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "vue": "^2.5.17"
   }
 }

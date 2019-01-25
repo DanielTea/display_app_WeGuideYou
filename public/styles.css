@@ -4,6 +4,9 @@ body {
   margin : 0;
   overflow: hidden;
   cursor: none;
+  font-family: Gobold, 'Titillium Web', Titillium, Ubuntu, sans;
+  font-style: italic; 
+  text-transform: uppercase;
 }
 
 @keyframes background-movement {
@@ -39,7 +42,7 @@ body {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background-color: #002965;
+  background-color: #00205b;
 }
 
 .start-bg-animation {
@@ -103,7 +106,8 @@ body {
 }
 
 #text {
-    font-family: 'Titillium Web', Titillium, Ubuntu, sans;
+    font-family: inherit;
+
     font-weight: 300;
     position: absolute;
     top: 10px;
@@ -129,7 +133,7 @@ body {
 
 .inner > h1, .inner > h2 {
   font-size: 60px;
-  font-family: 'Titillium Web', Titillium, Ubuntu, sans;
+  font-family: inherit;
   font-weight: 300;
   color: rgba(255,255,255,0);
   text-align: center;
@@ -148,4 +152,175 @@ body {
     color: rgba(255,255,255,0.8) !important;
 
 }
+
+/* widget styles */
+
+.widgets {
+  padding: 50px 50px 100px 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.widget {
+  transition: all 500ms ease-in-out;
+}
+
+.widget {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(1, 1);
+}
+
+.widget.small {
+  top: calc(100vh - 100px);
+}
+
+.widget.expanded {
+  transform: scale(1.5, 1.5);
+}
+
+.widget.fadeIn {
+  animation: fadeInLeft 500ms;
+}
+
+.widget.fadeOut {
+  animation: fadeOutRight 500ms;
+  opacity: 0;
+}
+
+.widget.hidden {
+  display: none;
+}
+
+/* info box */
+.info-box-widget {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: inherit;
+  color: #fff;
+}
+
+/* weather */
+
+.weather-widget {
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.weather-day-forecast-icon {
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.weather-day-forecast {
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.weather-day-forecast h2 {
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: normal;
+}
+
+
+.weather-day-forecast:first-child h2 {
+  font-weight: bold;
+}
+
+.weather-day-forecast-temperature {
+  font-size: 1.1em;
+}
+
+.weather-night {
+  color: rgb(119,	141,	173);
+}
+
+
+/* animations */
+
+@-webkit-keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInLeft {
+  -webkit-animation-name: fadeInLeft;
+  animation-name: fadeInLeft;
+}
+
+
+@-webkit-keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.fadeOutRight {
+  -webkit-animation-name: fadeOutRight;
+  animation-name: fadeOutRight;
+}
+
 

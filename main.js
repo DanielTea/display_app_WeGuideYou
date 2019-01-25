@@ -12,11 +12,38 @@ const connectionConfig = JSON.parse(fs.readFileSync('config/connection.json', 'u
 myPort = connectionConfig.port
 console.log("Listening on:", myPort)  
 
+let FAKE_EVENTS = true;
+let timeNoBodyInFrontOfCamera = 10 * 1000
+let timePaulInFrontOfCamera = 5 * 1000
+
+if (FAKE_EVENTS) {
+  createFakeEvents()
+}
+
+
+function createFakeEvents() {
+  setInterval(() => {
+    setTimeout(() => {
+      let msg =  {
+        "face_id": "paul.sonnentag@gmail.com",
+        "heading": "Hallo Paul,",
+        "text": "dein Meeting FGS Besprechung ist in Area 51, gehe im Treppenhaus nach oben und dann links",
+      }
+
+      console.log("Creating Fake Greeting...")
+      win.webContents.send('new-session' , msg);
+    }, timeNoBodyInFrontOfCamera);
+
+    setTimeout(() => {
+      console.log("Stopping Fake Greeting...")
+      win.webContents.send('stop-session' , {"face_id": "paul.sonnentag@gmail.com"});
+    }, timeNoBodyInFrontOfCamera + timePaulInFrontOfCamera);
+  }, timeNoBodyInFrontOfCamera + timePaulInFrontOfCamera + 1)
+}
 
 let debug = false;
+
 let fullscreen = false;
-// let browserAlive = false;
-// let isConnected = false;
 
 // taking care of commandline args
 var arguments = process.argv.slice(2);

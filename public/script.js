@@ -1,6 +1,55 @@
 
 const {ipcRenderer} = require('electron')
 
+const path = require("path");
+const WidgetManager = require('./public/widgets/');
+
+const widgetManager = new WidgetManager({
+  rootElement: document.getElementById('widgets'),
+  slideWidgets: [
+    {
+      type: 'info-box',
+      duration: 10,
+      data: {
+        template: `
+          <h1>My Title</h1>
+          <img src='https://picsum.photos/300/?random'>
+        `
+      },
+    },
+    {
+      type: 'info-box',
+      duration: 10,
+      data: {
+        template: `
+          <h1>Title with text</h1>
+          <p style='width: 500px'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          </p>
+        `
+      },
+    },
+    {
+      type: 'info-box',
+      duration: 10,
+      data: {
+        template: `
+          <h1>Quick info box</h1>
+          <img src='https://picsum.photos/400/300/?random'>        
+        `
+      },
+    },
+  ],
+
+  mainWidget: {
+    type: 'weather',
+    duration: 15,
+    data: {
+     location: 'stuttgart,de',
+      apiKey: '8ad8bde5afdafc253d1e2b6645fb1c01'
+    }
+  }
+})
 
 let greetingInProcess = false
 let currentPerson;
@@ -93,33 +142,10 @@ function setParticleOpacity(opacity) {
 }
 
 
-function getGreetingText()
-{
-  let oneDigit = () => Math.floor(Math.random() * 10)
-
-  let directions;
-
-  let key = Math.floor(Math.random() * 3)
-  switch (key) {
-    case 0:
-      directions = "please follow the staircase on the left."
-      break;
-    case 1:
-      directions = "please go straight into the hallway."
-      break;
-    case 2:
-        directions = "please follow along on the right."
-        break;
-    default:
-      console.log("WTF?? " + key);
-  }
-
-  let roomNumber = "A" + oneDigit() + oneDigit() + oneDigit();
-
-  return "Your upcoming meeting is in " + roomNumber + ", " + directions;
-}
-
 function startNewGreeting(message) {  // let personIsActive = false
+
+  // when greeting is shown pause widget manager
+  widgetManager.pause()
 
   greetingInProcess = true;
   currentPerson = message.face_id;
@@ -149,6 +175,9 @@ function startNewGreeting(message) {  // let personIsActive = false
 
 function deleteGreeting() {
   console.log("shutting down last greeting");
+
+  // when greeting is hidden unpause widget manager with a little bit delay
+  setTimeout(() => { widgetManager.unpause() }, 500)
 
   let hello = getEl("#headline")[0]
   let extraText = getEl("#extratext")[0]
