@@ -12,8 +12,8 @@ const connectionConfig = JSON.parse(fs.readFileSync('config/connection.json', 'u
 myPort = connectionConfig.port
 console.log("Listening on:", myPort)  
 
-let FAKE_EVENTS = true;
-let timeNoBodyInFrontOfCamera = 10 * 1000
+let FAKE_EVENTS = false;
+let timeNoBodyInFrontOfCamera = 5 * 1000
 let timePaulInFrontOfCamera = 5 * 1000
 
 if (FAKE_EVENTS) {
@@ -27,7 +27,7 @@ function createFakeEvents() {
       let msg =  {
         "face_id": "paul.sonnentag@gmail.com",
         "heading": "Hallo Paul,",
-        "text": "dein Meeting FGS Besprechung ist in Area 51, gehe im Treppenhaus nach oben und dann links",
+        "text": "dein Meeting FGS Besprechung ist in Area 51, gehe im Treppenhaus nach oben und dann biege links ab!",
       }
 
       console.log("Creating Fake Greeting...")

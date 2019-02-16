@@ -4,9 +4,9 @@ body {
   margin : 0;
   overflow: hidden;
   cursor: none;
-  font-family: Gobold, 'Titillium Web', Titillium, Ubuntu, sans;
-  font-style: italic; 
-  text-transform: uppercase;
+  font-family: 'Titillium Web', Titillium, Ubuntu, sans;
+  /* font-style: italic;  */
+  /* text-transform: uppercase; */
 }
 
 @keyframes background-movement {
@@ -21,7 +21,6 @@ body {
     66% {
       background-position: 0% 1000%;
     }
-
     100% {
       background-position: 1000% 1000%;
     }
@@ -119,7 +118,9 @@ body {
   }
 
 .inner > h2 {
-  font-weight: 200 !important;}
+  font-weight: 200 !important;
+  font-size: 45px!important;
+}
 
 .outer {
   position: absolute;
@@ -128,7 +129,7 @@ body {
   width: 100%;
 }
 .inner {
-  padding: 100px 300px;
+  padding: 100px 100px;
 }
 
 .inner > h1, .inner > h2 {
