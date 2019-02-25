@@ -9,41 +9,108 @@ const widgetManager = new WidgetManager({
   slideWidgets: [
     {
       type: 'info-box',
-      duration: 10,
+      duration: 8,
       data: {
         template: `
-          <h1>My Title</h1>
-          <img src='https://picsum.photos/300/?random'>
-        `
-      },
-    },
-    {
-      type: 'info-box',
-      duration: 10,
-      data: {
-        template: `
-          <h1>Title with text</h1>
+          <h1>Welcome to DS HUB</h1>
           <p style='width: 500px'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+           I am the Facial Guidance System (FGS), nice to see you!
           </p>
         `
       },
     },
+    // {
+    //   type: 'info-box',
+    //   duration: 8,
+    //   data: {
+    //     template: `
+    //       <h1>I'm a face recognition...</h1>
+    //       <p style='width: 500px'>
+    //         ...but not an access control system
+    //       </p>
+    //     `
+    //   },
+    // },
     {
       type: 'info-box',
-      duration: 10,
+      duration: 8,
       data: {
         template: `
-          <h1>Quick info box</h1>
-          <img src='https://picsum.photos/400/300/?random'>        
+        <h1>I'm here to help you...</h1>
+        <p style='width: 500px'>
+        ...I'll give you hints on how to find your meeting room.
+        </p>
         `
       },
     },
+    {
+      type: 'info-box',
+      duration: 8,
+      data: {
+        template: `
+        <h1>How to use me…</h1>
+        <p style='width: 500px'>
+        …its easy
+        book a meeting room in the OWP22 and agree to the face recognition in MyWima.
+        </p>
+        `
+      },
+    },
+    // {
+    //   type: 'info-box',
+    //   duration: 8,
+    //   data: {
+    //     template: `
+    //     <h1>Only if you agree….</h1>
+    //     <p style='width: 500px'>
+    //     ...I'll learn your lovely face from your intranet picture.
+    //     (Intranet->MyWima)
+    //     </p>
+    //     `
+    //   },
+    // },
+    // {
+    //   type: 'info-box',
+    //   duration: 8,
+    //   data: {
+    //     template: `
+    //     <h1>WoOoOSSH What kind of technique is that? </h1>
+    //     <p style='width: 500px'>
+    //     I am an artificial intelligence able to learn faces and guide you to your meeting room.
+    //     </p>
+    //     `
+    //   },
+    // },
+    // {
+    //   type: 'info-box',
+    //   duration: 8,
+    //   data: {
+    //     template: `
+    //     <h1>Not only for Dreso's</h1>
+    //     <p style='width: 500px'>
+    //     I will also be able to guide external guests, too
+    //     </p>
+    //     `
+    //   },
+    // },
+    {
+        type: 'info-box',
+        duration: 30,
+        data: {
+          template: `
+            <h1>Coming soon…</h1>
+            <p style='width: 500px'>
+              ...I'll rise to life in the next few days, you will be informed.
+            </p>
+          `
+        },
+      },
+    
   ],
-
+  
   mainWidget: {
     type: 'weather',
-    duration: 15,
+    duration: 60,
     data: {
      location: 'stuttgart,de',
       apiKey: '8ad8bde5afdafc253d1e2b6645fb1c01'
@@ -76,6 +143,21 @@ particlesJS.load('particles-js', 'public/particles.json', function() {
   console.log('callback - particles.js config loaded');
 });
 
+setTimeout(() => {
+  putParticleEffectIntoTheMiddle()
+}, 5000)
+
+function putParticleEffectIntoTheMiddle() {
+  let particleCanvas = getEl("#particles-js > canvas")[0]
+
+  const x = particleCanvas.getAttribute("width") / 4
+  const y = particleCanvas.getAttribute("height") / 4
+
+  console.log("BUBBLE", x, y)
+  triggerParticleBubble(x,y)
+
+
+}
 
 function setPositionForParticleEffect(x,y) {
   window.pJSDom[0].pJS.interactivity.mouse.click_pos_x = 1000
@@ -123,20 +205,6 @@ function triggerParticleBubble(x,y) {
   // console.log("triggering bubble at", x, y)
 }
 
-function triggerParticleRepulse(x,y) {
-  try {
-    setModeForParticleEffect("repulse")
-  } catch (error) {
-    console.log(error.message)
-    return
-  }
-
-  setPositionForParticleEffect(x,y)
-  dispatchFakeMouseEventForParticleJs("click")
-
-  console.log("triggering repulse at", x, y)
-}
-
 function setParticleOpacity(opacity) {
   window.pJSDom[0].pJS.particles.opacity.value = opacity;  
 }
@@ -162,11 +230,11 @@ function startNewGreeting(message) {  // let personIsActive = false
   }, 0);
 
   setTimeout(function() {
-  extraText.textContent = message.text
-  extraText.setAttribute("id", "extratext");
-  setTimeout(function () {
-    extraText.classList.add("make-visible")
-  }, 0);
+    extraText.textContent = message.text
+    extraText.setAttribute("id", "extratext");
+    setTimeout(function () {
+      extraText.classList.add("make-visible")
+    }, 0);
   }, 500)
 
   getEl(".wrapper")[0].classList.add("start-bg-animation");
@@ -203,7 +271,7 @@ function deleteGreeting() {
       extraText1.textContent = "";
 
     }
-  }, 1000);
+  }, 500);
 
   greetingInProcess = false;
   currentPerson == undefined;
@@ -218,10 +286,6 @@ ipcRenderer.on("position", (event, arg) => {
 })
 
 function correctPosition(x0, y0, x1, y1, framesize) {
-
-  // The resolution of the video camera is currently 320 * 240 px.
-  // So we first take the middle of the bounding box of the face 
-  // And then scale the values according to screen size
 
   let middle_x = (x0 + x1) / 2 
   let middle_y = (y0 + y1) / 2
@@ -493,7 +557,7 @@ ipcRenderer.on("new-session", (event, arg) => {
     deleteGreeting()
     setTimeout(function () {
       startNewGreeting(arg);
-    }, 500);
+    }, 200);
   }
   else
   {

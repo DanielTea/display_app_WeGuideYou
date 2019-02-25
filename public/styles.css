@@ -325,3 +325,6 @@ body {
 }
 
 
+.info-box-widget > p {
+  font-size: 2em;
+}

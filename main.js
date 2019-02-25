@@ -114,7 +114,7 @@ app.on('activate', () => {
 
 let io = require('socket.io')
 
-console.log("connecting to: ", myPort)
+console.log("listening on port: ", myPort)
 let connection =  io.listen(myPort)
 
 connection.sockets.on('connection', function (socket) { 
