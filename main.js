@@ -3,14 +3,40 @@ const {app, BrowserWindow, protocol, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
 const windowName = "main"
+const pretty = require("util").format
 
 const USE_IPC_WITH_PYTHON = false
 let myPort, myAddress
 
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, printf } = format;
+
+const myFormat = printf(info => {
+  return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
+});
+
+const logger = createLogger({
+  format: combine(
+    label({ label: 'Display App' }),
+    timestamp(),
+    myFormat,
+    
+    ),
+    
+transports: [
+  new transports.Console({ level: 'debug'}), 
+  new transports.File({
+    filename: 'combined.log',
+    level: 'silly',
+  })]
+});
+
+logger.info("booting Display App")
+
 
 const connectionConfig = JSON.parse(fs.readFileSync('config/connection.json', 'utf8'));
 myPort = connectionConfig.port
-console.log("Listening on:", myPort)  
+logger.info(pretty("Listening on:", myPort))
 
 let FAKE_EVENTS = false;
 let timeNoBodyInFrontOfCamera = 5 * 1000
@@ -18,6 +44,7 @@ let timePaulInFrontOfCamera = 5 * 1000
 
 if (FAKE_EVENTS) {
   createFakeEvents()
+  logger.info(pretty("FAKE EVENTS"))
 }
 
 
@@ -30,12 +57,12 @@ function createFakeEvents() {
         "text": "dein Meeting FGS Besprechung ist in Area 51, gehe im Treppenhaus nach oben und dann biege links ab!",
       }
 
-      console.log("Creating Fake Greeting...")
+      logger.info(pretty("Creating Fake Greeting..."))
       win.webContents.send('new-session' , msg);
     }, timeNoBodyInFrontOfCamera);
 
     setTimeout(() => {
-      console.log("Stopping Fake Greeting...")
+      logger.info(pretty("Stopping Fake Greeting..."))
       win.webContents.send('stop-session' , {"face_id": "paul.sonnentag@gmail.com"});
     }, timeNoBodyInFrontOfCamera + timePaulInFrontOfCamera);
   }, timeNoBodyInFrontOfCamera + timePaulInFrontOfCamera + 1)
@@ -53,19 +80,19 @@ arguments.forEach(function(value,index, array) {
   if ("fullscreen" == splittedArg[0] || "fs" == splittedArg[0])
   {
     fullscreen = true;
-    console.log("app is now running in fullscreen mode");
+    logger.info(pretty("app is now running in fullscreen mode"));
   }
 
   if ("debug" == splittedArg[0])
   {
     debug = true;
-    console.log("app is now running in debug mode");
+    logger.info(pretty("app is now running in debug mode"));
   }
 
   if ("port" == splittedArg[0])
   {
     myPort = splittedArg[1]
-    console.log("app is now running with different port " + myPort);
+    logger.info(pretty("app is now running with different port " + myPort));
   }
 });
 
@@ -114,37 +141,37 @@ app.on('activate', () => {
 
 let io = require('socket.io')
 
-console.log("listening on port: ", myPort)
+logger.info(pretty("listening on port: ", myPort))
 let connection =  io.listen(myPort)
 
 connection.sockets.on('connection', function (socket) { 
-  console.log("connection to internal handler")
+  logger.info(pretty("connection to internal handler"))
 
   socket.emit("msg", "Hello from Display")
 
   socket.on('msg', msg => {
-    console.log("got message", msg)
+    logger.info(pretty("got message", msg))
   })
   
   socket.on("newSession", (msg) => {
-    console.log("newSession", msg)
+    logger.info(pretty("newSession", msg))
     win.webContents.send('new-session' , msg);
   })
   
   
   socket.on("stopSession", (msg) => {
-    console.log("stopSession", msg)
+    logger.info(pretty("stopSession", msg))
     win.webContents.send('stop-session' , {"face_id": msg});
   })
   
   
   socket.on("updatePosition", (msg) => {
-    console.log("updatePosition", msg)
+    logger.info(pretty("updatePosition", msg))
     win.webContents.send('position' , {"position": msg.position, "framesize": msg.framesize});
   })
 })
 
 ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg) 
+  logger.info(pretty(arg))
   event.sender.send('asynchronous-reply', 'hello from electron')
 })
