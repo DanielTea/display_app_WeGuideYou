@@ -166,8 +166,8 @@ connection.sockets.on('connection', function (socket) {
   
   
   socket.on("updatePosition", (msg) => {
-    logger.info(pretty("updatePosition", msg))
-    win.webContents.send('position' , {"position": msg.position, "framesize": msg.framesize});
+    // logger.info(pretty("updatePosition", msg))
+    // win.webContents.send('position' , {"position": msg.position, "framesize": msg.framesize});
   })
 })
 
