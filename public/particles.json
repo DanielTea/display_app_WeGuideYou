@@ -6,7 +6,7 @@
       "value": 148,
       "density": {
         "enable": true,
-        "value_area": 700
+        "value_area": 2500
       }
     },
     "color": {
@@ -46,7 +46,7 @@
     },
     "line_linked": {
       "enable": true,
-      "distance": 110,
+      "distance": 200,
       "color_OLD": "#f46036",
       "color": "#009fe3",
       "color_WHITE": "#ffffff",
